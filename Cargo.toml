@@ -1,0 +1,23 @@
+[package]
+name = "justerror"
+version = "0.1.0"
+description = "Extension to `thiserror` that helps reduce the amount of handwriting"
+authors = ["Alex Fedoseev <alex@fedoseev.mx>"]
+documentation = "https://docs.rs/justerror"
+repository = "https://github.com/alexfedoseev/justerror"
+keywords = ["error", "error-handling"]
+license = "MIT"
+edition = "2018"
+rust-version = "1.31"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = "1.0"
+quote = "1.0"
+proc-macro2 = "1.0"
+
+[dev-dependencies]
+thiserror = "1.0"
+indoc = "1.0"
