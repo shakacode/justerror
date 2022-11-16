@@ -24,9 +24,9 @@
 //! #[Error]
 //! enum EnumError {
 //!     Foo,
-//!   Bar {
+//!     Bar {
 //!         a: &'static str,
-//!     b: usize
+//!         b: usize
 //!     },
 //! }
 //!
