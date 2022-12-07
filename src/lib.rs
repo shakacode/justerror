@@ -10,7 +10,7 @@
 //!
 //! Add to `main.rs`:
 //!
-//! ```rust
+//! ```ignore
 //! #[macro_use]
 //! extern crate justerror;
 //! ```
@@ -21,6 +21,7 @@
 //! Generally, you can attach `#[Error]` macro to an error type and be done with it.
 //!
 //! ```rust
+//! # use justerror::Error;
 //! #[Error]
 //! enum EnumError {
 //!     Foo,
@@ -45,6 +46,7 @@
 //! Both can be applied at the root level.
 //!
 //! ```rust
+//! # use justerror::Error;
 //! #[Error(desc = "My emum error description", fmt = debug)]
 //! enum EnumError {
 //!     Foo(usize),
@@ -54,6 +56,7 @@
 //! And at the variant level.
 //!
 //! ```rust
+//! # use justerror::Error;
 //! #[Error(desc = "My emum error description", fmt = debug)]
 //! enum EnumError {
 //!     #[error(desc = "Foo error description", fmt = display)]
@@ -64,6 +67,7 @@
 //! `fmt` can also be applied to individual fields.
 //!
 //! ```rust
+//! # use justerror::Error;
 //! #[Error(desc = "My emum error description", fmt = debug)]
 //! enum EnumError {
 //!     #[error(desc = "Foo error description", fmt = display)]
@@ -242,6 +246,11 @@ impl Parse for Fmt {
 
 struct Output(String);
 
+enum FieldIdentStyle {
+    Prefixed,
+    Unprefixed,
+}
+
 impl Output {
     fn new() -> Self {
         Self(String::new())
@@ -292,15 +301,33 @@ impl Output {
 
                 for field in &mut fields.named {
                     if let Some(field_ident) = field.ident.clone() {
-                        output.push_field(field, &field_ident, &error_args, &variant_error_args)?;
+                        output.push_field(
+                            field,
+                            &field_ident,
+                            &FieldIdentStyle::Prefixed,
+                            &error_args,
+                            &variant_error_args,
+                        )?;
                     }
                 }
             }
             Fields::Unnamed(fields) => {
                 output.push_debug_title();
 
+                let ident_style = if fields.unnamed.len() > 1 {
+                    FieldIdentStyle::Prefixed
+                } else {
+                    FieldIdentStyle::Unprefixed
+                };
+
                 for (idx, field) in fields.unnamed.iter_mut().enumerate() {
-                    output.push_field(field, idx, &error_args, &variant_error_args)?;
+                    output.push_field(
+                        field,
+                        idx,
+                        &ident_style,
+                        &error_args,
+                        &variant_error_args,
+                    )?;
                 }
             }
             Fields::Unit => (),
@@ -313,6 +340,7 @@ impl Output {
         &mut self,
         field: &mut Field,
         ident: impl Display,
+        ident_style: &FieldIdentStyle,
         error_args: &ErrorArgs,
         variant_error_args: &Option<ErrorArgs>,
     ) -> Result<(), TokenStream> {
@@ -344,8 +372,12 @@ impl Output {
         let fmt = fmt.to_string();
 
         buf.push_str("\n");
-        buf.push_str(&ident);
-        buf.push_str(": ");
+
+        if let FieldIdentStyle::Prefixed = ident_style {
+            buf.push_str(&ident);
+            buf.push_str(": ");
+        }
+
         buf.push_str("{");
         buf.push_str(&ident);
         buf.push_str(&fmt);
