@@ -1,4 +1,6 @@
 # justerror
+<!-- cargo-sync-readme start -->
+
 This macro piggybacks on [`thiserror`](https://github.com/dtolnay/thiserror) crate and is supposed to reduce the amount of handwriting when you want errors in your app to be described via explicit types (rather than [`anyhow`](https://github.com/dtolnay/anyhow)).
 
 ## Installation
@@ -24,11 +26,11 @@ Generally, you can attach `#[Error]` macro to an error type and be done with it.
 ```rust
 #[Error]
 enum EnumError {
-  Foo,
-  Bar {
-    a: &'static str,
-    b: usize
-  },
+    Foo,
+    Bar {
+        a: &'static str,
+        b: usize
+    },
 }
 
 eprintln!("{}", EnumError::Bar { a: "Hey!", b: 42 });
@@ -48,7 +50,7 @@ Both can be applied at the root level.
 ```rust
 #[Error(desc = "My emum error description", fmt = debug)]
 enum EnumError {
-  Foo(usize),
+    Foo(usize),
 }
 ```
 
@@ -57,8 +59,8 @@ And at the variant level.
 ```rust
 #[Error(desc = "My emum error description", fmt = debug)]
 enum EnumError {
-  #[error(desc = "Foo error description", fmt = display)]
-  Foo(usize),
+    #[error(desc = "Foo error description", fmt = display)]
+    Foo(usize),
 }
 ```
 
@@ -67,12 +69,14 @@ enum EnumError {
 ```rust
 #[Error(desc = "My emum error description", fmt = debug)]
 enum EnumError {
-  #[error(desc = "Foo error description", fmt = display)]
-  Foo(#[fmt(">5")] usize),
+    #[error(desc = "Foo error description", fmt = display)]
+    Foo(#[fmt(">5")] usize),
 }
 ```
 
 See [tests](tests/tests.rs) for more examples.
+
+<!-- cargo-sync-readme end -->
 
 ## License
 MIT.
