@@ -2,7 +2,6 @@
 [<img alt="github" src="https://img.shields.io/badge/github-shakacode/justerror-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/shakacode/justerror)
 [<img alt="crates.io" src="https://img.shields.io/crates/v/justerror.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/justerror)
 [<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-justerror-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/justerror)
-[<img alt="build status" src="https://img.shields.io/github/workflow/status/shakacode/justerror/CI/main?style=for-the-badge" height="20">](https://github.com/shakacode/justerror/actions?query=branch%3Amain)
 <!-- cargo-sync-readme start -->
 
 This macro piggybacks on [`thiserror`](https://github.com/dtolnay/thiserror) crate and is supposed to reduce the amount of handwriting when you want errors in your app to be described via explicit types (rather than [`anyhow`](https://github.com/dtolnay/anyhow)).
