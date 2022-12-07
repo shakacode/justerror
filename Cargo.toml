@@ -1,6 +1,6 @@
 [package]
 name = "justerror"
-version = "0.1.0"
+version = "1.0.0"
 description = "Extension to `thiserror` that helps reduce the amount of handwriting"
 authors = ["Alex Fedoseev <alex@fedoseev.mx>"]
 readme = "README.md"
