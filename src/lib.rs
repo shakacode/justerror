@@ -155,13 +155,13 @@ impl Parse for ErrorArgs {
         let lookahead = input.lookahead1();
 
         if lookahead.peek(kw::desc) {
-            if let Some(_) = args.desc {
+            if args.desc.is_some() {
                 return Err(SyntaxError::new(input.span(), "`desc` is already defined"));
             }
             let desc = Self::parse_desc(input)?;
             args.desc = Some(desc);
         } else if lookahead.peek(kw::fmt) {
-            if let Some(_) = args.fmt {
+            if args.fmt.is_some() {
                 return Err(SyntaxError::new(input.span(), "`fmt` is already defined"));
             }
             let fmt = Self::parse_fmt(input)?;
@@ -270,7 +270,7 @@ impl Output {
     fn push_desc(&mut self, prefix: Option<&Ident>, desc: &str) {
         let buf = &mut self.0;
 
-        buf.push_str("\n");
+        buf.push('\n');
 
         if let Some(prefix) = prefix {
             buf.push_str(&prefix.to_string());
@@ -283,7 +283,7 @@ impl Output {
     fn push_debug_title(&mut self) {
         let buf = &mut self.0;
 
-        buf.push_str("\n");
+        buf.push('\n');
         buf.push_str("=== DEBUG DATA:");
     }
 
@@ -305,8 +305,8 @@ impl Output {
                             field,
                             &field_ident,
                             &FieldIdentStyle::Prefixed,
-                            &error_args,
-                            &variant_error_args,
+                            error_args,
+                            variant_error_args,
                         )?;
                     }
                 }
@@ -321,13 +321,7 @@ impl Output {
                 };
 
                 for (idx, field) in fields.unnamed.iter_mut().enumerate() {
-                    output.push_field(
-                        field,
-                        idx,
-                        &ident_style,
-                        &error_args,
-                        &variant_error_args,
-                    )?;
+                    output.push_field(field, idx, &ident_style, error_args, variant_error_args)?;
                 }
             }
             Fields::Unit => (),
@@ -364,24 +358,24 @@ impl Output {
             field.attrs.remove(idx);
         }
 
-        let fmt = Fmt::derive(&error_args, &variant_error_args, &field_fmt);
+        let fmt = Fmt::derive(error_args, variant_error_args, &field_fmt);
 
         let buf = &mut self.0;
 
         let ident = ident.to_string();
         let fmt = fmt.to_string();
 
-        buf.push_str("\n");
+        buf.push('\n');
 
         if let FieldIdentStyle::Prefixed = ident_style {
             buf.push_str(&ident);
             buf.push_str(": ");
         }
 
-        buf.push_str("{");
+        buf.push('{');
         buf.push_str(&ident);
         buf.push_str(&fmt);
-        buf.push_str("}");
+        buf.push('}');
 
         Ok(())
     }
