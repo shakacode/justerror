@@ -34,7 +34,7 @@
 //! eprintln!("{}", EnumError::Bar { a: "Hey!", b: 42 });
 //!
 //! // EnumError::Bar
-//! // === DEBUG DATA:
+//! // === ↴
 //! // a: Hey!
 //! // b: 42
 //! ```
@@ -284,7 +284,7 @@ impl Output {
         let buf = &mut self.0;
 
         buf.push('\n');
-        buf.push_str("=== DEBUG DATA:");
+        buf.push_str("=== ↴");
     }
 
     fn push_fields(

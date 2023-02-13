@@ -39,7 +39,7 @@ enum EnumError {
 eprintln!("{}", EnumError::Bar { a: "Hey!", b: 42 });
 
 // EnumError::Bar
-// === DEBUG DATA:
+// === ↴
 // a: Hey!
 // b: 42
 ```

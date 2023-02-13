@@ -49,7 +49,7 @@ fn it_formats_enum_error_with_named_fields() {
     let actual = format!("{}", EnumError::Bar { a: "A", b: 42 });
     let expected = indoc! {r#"
         EnumError::Bar
-        === DEBUG DATA:
+        === ↴
         a: A
         b: 42"#};
 
@@ -61,7 +61,7 @@ fn it_formats_enum_error_with_single_unnamed_field() {
     let actual = format!("{}", EnumError::Baz("Oh no"));
     let expected = indoc! {r#"
         EnumError::Baz
-        === DEBUG DATA:
+        === ↴
         Oh no"#};
 
     assert_eq!(actual, expected);
@@ -72,7 +72,7 @@ fn it_formats_enum_error_with_multiple_unnamed_fields() {
     let actual = format!("{}", EnumError::Qux(vec!["One", "Two"], 42));
     let expected = indoc! {r#"
         EnumError::Qux
-        === DEBUG DATA:
+        === ↴
         0: [
             "One",
             "Two",
@@ -100,7 +100,7 @@ fn it_formats_enum_error_with_args_with_field_with_custom_format() {
         EnumErrorWithArgs::Bar
         EnumErrorWithArgs: My enum error
         Bar: Bar error
-        === DEBUG DATA:
+        === ↴
         a: A
         b: 00042"#};
 
@@ -114,7 +114,7 @@ fn it_formats_enum_error_with_args_with_single_unnamed_field() {
         EnumErrorWithArgs::Baz
         EnumErrorWithArgs: My enum error
         Baz: Baz error
-        === DEBUG DATA:
+        === ↴
         "Oh no""#};
 
     assert_eq!(actual, expected);
@@ -126,7 +126,7 @@ fn it_formats_enum_error_with_args_with_field_using_root_format() {
     let expected = indoc! {r#"
         EnumErrorWithArgs::Qux
         My enum error
-        === DEBUG DATA:
+        === ↴
         0: [
             "One",
             "Two",
@@ -142,7 +142,7 @@ fn it_formats_multiple_named_fields_struct_error() {
     let expected = indoc! {r#"
         MultipleNamedFieldsStructError
         My struct error
-        === DEBUG DATA:
+        === ↴
         a: A
         b:     7"#};
 
@@ -154,7 +154,7 @@ fn it_formats_single_unnamed_field_struct_error() {
     let actual = format!("{}", SingleUnnamedFieldStructError("Oh no"));
     let expected = indoc! {r#"
         SingleUnnamedFieldStructError
-        === DEBUG DATA:
+        === ↴
         Oh no"#};
 
     assert_eq!(actual, expected);
