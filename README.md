@@ -6,6 +6,11 @@
 
 This macro piggybacks on [`thiserror`](https://github.com/dtolnay/thiserror) crate and is supposed to reduce the amount of handwriting when you want errors in your app to be described via explicit types (rather than [`anyhow`](https://github.com/dtolnay/anyhow)).
 
+> ### ShakaCode
+> If you are looking for help with the development and optimization of your project, [ShakaCode](https://www.shakacode.com) can help you to take the reliability and performance of your app to the next level.
+>
+> If you are a developer interested in working on Rust / ReScript / TypeScript / Ruby on Rails projects, [we're hiring](https://www.shakacode.com/career/)!
+
 ## Installation
 
 Add to `Cargo.toml`:
